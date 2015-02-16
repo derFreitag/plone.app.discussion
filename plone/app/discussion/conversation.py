@@ -27,6 +27,7 @@ from OFS.event import ObjectWillBeRemovedEvent
 from OFS.Traversable import Traversable
 from persistent import Persistent
 from plone.base.interfaces import IHideFromBreadcrumbs
+from Products.CMFCore.utils import getToolByName
 from zope.annotation.interfaces import IAnnotatable
 from zope.annotation.interfaces import IAnnotations
 from zope.component import adapter
@@ -74,8 +75,13 @@ class Conversation(Traversable, Persistent, Explicit):
         return parent.restrictedTraverse("@@conversation_view").enabled()
 
     def total_comments(self):
+        wft = getToolByName(self, 'portal_workflow')
+        workflow_id = 'freitag_comment_workflow'
+
         public_comments = [
             x for x in self.values() if user_nobody.has_permission("View", x)
+            and wft.getStatusOf(workflow_id, x)
+            and wft.getStatusOf(workflow_id, x)['review_state'] == 'visible'
         ]
         return len(public_comments)
 
