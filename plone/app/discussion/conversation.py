@@ -73,8 +73,13 @@ class Conversation(Traversable, Persistent, Explicit):
         return parent.restrictedTraverse("@@conversation_view").enabled()
 
     def total_comments(self):
+        wft = getToolByName(self, 'portal_workflow')
+        workflow_id = 'freitag_comment_workflow'
+
         public_comments = [
             x for x in self.values() if user_nobody.has_permission("View", x)
+            and wft.getStatusOf(workflow_id, x)
+            and wft.getStatusOf(workflow_id, x)['review_state'] == 'visible'
         ]
         return len(public_comments)
 
