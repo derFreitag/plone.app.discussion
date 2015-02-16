@@ -49,6 +49,7 @@ from plone.app.discussion.interfaces import IReplies
 from plone.app.discussion.comment import Comment
 
 from AccessControl.SpecialUsers import nobody as user_nobody
+from Products.CMFCore.utils import getToolByName
 
 ANNOTATION_KEY = 'plone.app.discussion:conversation'
 
@@ -103,9 +104,13 @@ class Conversation(Traversable, Persistent, Explicit):
         To solve it, this method takes over the indexing and is being used by
         total_comments itself so that backwards compatibility is kept.
         """
+        wft = getToolByName(self, 'portal_workflow')
+        workflow = 'freitag_comment_workflow'
+
         public_comments = [
             x for x in self.values()
-            if user_nobody.has_permission('View', x)
+            if wft.getStatusOf(workflow, x) and
+            wft.getStatusOf(workflow, x)['review_state'] == 'visible'
         ]
         return len(public_comments)
 
