@@ -25,6 +25,7 @@ from persistent import Persistent
 from plone.app.discussion.comment import Comment
 from plone.app.discussion.interfaces import IConversation
 from plone.app.discussion.interfaces import IReplies
+from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone import DISCUSSION_ANNOTATION_KEY as ANNOTATION_KEY
 from Products.CMFPlone.interfaces import IHideFromBreadcrumbs
 from zope.annotation.interfaces import IAnnotatable
@@ -75,9 +76,13 @@ class Conversation(Traversable, Persistent, Explicit):
         return parent.restrictedTraverse('@@conversation_view').enabled()
 
     def total_comments(self):
+        wft = getToolByName(self, 'portal_workflow')
+        workflow_id = 'freitag_comment_workflow'
+
         public_comments = [
             x for x in self.values()
-            if user_nobody.has_permission('View', x)
+            if wft.getStatusOf(workflow_id, x) and
+            wft.getStatusOf(workflow_id, x)['review_state'] == 'visible'
         ]
         return len(public_comments)
 
