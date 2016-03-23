@@ -70,22 +70,16 @@ class CommentingTool(UniqueObject, SimpleItem):
 def index_object(obj, event):
     """Index the object when added to the conversation
     """
-    tool = queryUtility(ICommentingTool)
-    if tool is not None:
-        tool.indexObject(obj)
+    obj.indexObject()
 
 
 def unindex_object(obj, event):
     """Unindex the object when removed
     """
-    tool = queryUtility(ICommentingTool)
-    if tool is not None:
-        tool.unindexObject(obj)
+    obj.unindexObject()
 
 
 def modified_object(obj, event):
     """Reindex the object when modified
     """
-    tool = queryUtility(ICommentingTool)
-    if tool is not None:
-        tool.reindexObject(obj)
+    obj.reindexObject()
