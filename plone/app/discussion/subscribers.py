@@ -14,3 +14,10 @@ def unindex_object(obj, event):
     """
     catalog = getToolByName(obj, 'portal_catalog')
     return catalog.unindexObject(obj)
+
+
+def modified_object(obj, event):
+    """Reindex the object when it is modified.
+    """
+    catalog = getToolByName(obj, 'portal_catalog')
+    return catalog.reindexObject(obj)
