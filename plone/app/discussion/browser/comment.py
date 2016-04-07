@@ -10,6 +10,8 @@ from plone.app.discussion import PloneAppDiscussionMessageFactory as _
 from comments import CommentForm
 from z3c.form import button
 from plone.z3cform.layout import wrap_form
+from zope.event import notify
+from zope.lifecycleevent import ObjectModifiedEvent
 
 
 class View(BrowserView):
@@ -86,6 +88,8 @@ class EditCommentForm(CommentForm):
 
         # Update text
         self.context.text = data['text']
+        # Notify that the object has been modified
+        notify(ObjectModifiedEvent(self.context))
 
         # Redirect to comment
         IStatusMessage(self.request).add(_(u'comment_edit_notification',
