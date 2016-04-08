@@ -6,12 +6,17 @@ Changelog
 
 New:
 
-- *add item here*
+- Add der Freitag specific logic about how to count public comments.
+  [gforcada]
+
+- Index/reindex/unindex the comment itself, do not defer to ``ICommentingTool``.
+  This way it can be integrated into collective.indexing and Solr.
+  [gforcada]
 
 Fixes:
 
-- *add item here*
-
+- Reindex comments when they are modified.
+  [gforcada]
 
 2.2.16 (2016-02-15)
 -------------------
