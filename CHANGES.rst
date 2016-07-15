@@ -10,13 +10,20 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Add der Freitag specific logic about how to count public comments.
+  [gforcada]
+
+- Index/reindex/unindex the comment itself, do not defer to ``ICommentingTool``.
+  This way it can be integrated into collective.indexing and Solr.
+  [gforcada]
 
 Bug fixes:
 
 - Use zope.interface decorator.
   [gforcada]
 
+- Reindex comments when they are modified.
+  [gforcada]
 
 2.4.16 (2016-06-27)
 -------------------
