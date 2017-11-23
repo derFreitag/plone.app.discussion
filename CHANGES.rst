@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.4.21.post1 (unreleased)
+2.4.21.post1 (2017-11-23)
 -------------------------
 
 - Remove an upgrade step that reindexes all comments. It's pointless for us.
