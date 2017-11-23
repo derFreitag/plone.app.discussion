@@ -4,8 +4,8 @@ Changelog
 2.4.21.post1 (unreleased)
 -------------------------
 
-- Nothing changed yet.
-
+- Remove an upgrade step that reindexes all comments. It's pointless for us.
+  [gforcada]
 
 2.4.21.post0 (2017-11-20)
 -------------------------
