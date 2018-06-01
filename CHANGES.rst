@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.4.21.post2 (unreleased)
+2.4.21.post2 (2018-06-01)
 -------------------------
 
 - Fix a mehtod call.
