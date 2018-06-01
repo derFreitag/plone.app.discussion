@@ -4,8 +4,8 @@ Changelog
 2.4.21.post2 (unreleased)
 -------------------------
 
-- Nothing changed yet.
-
+- Fix a mehtod call.
+  [gforcada]
 
 2.4.21.post1 (2017-11-23)
 -------------------------

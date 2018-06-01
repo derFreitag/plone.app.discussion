@@ -11,4 +11,4 @@ def index_object(obj, event):
 def unindex_object(obj, event):
     """Unindex the object when it is removed from the conversation.
     """
-    obj.unindexObject(obj)
+    obj.unindexObject()
