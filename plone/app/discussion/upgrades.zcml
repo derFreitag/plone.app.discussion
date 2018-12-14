@@ -45,10 +45,6 @@
         description="reload rolemap config to enable new permissions 'Delete comments' and 'Delete own comments'"
         handler=".upgrades.update_rolemap"
         />
-    <genericsetup:upgradeStep
-        title="Update plone.app.discussion workflows"
-        handler=".upgrades.upgrade_comment_workflows"
-        />
   </genericsetup:upgradeSteps>
 
 </configure>
