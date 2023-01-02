@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+3.4.7.post1 (2023-01-03)
+------------------------
+
+Breaking changes:
+
+
+- Ignore an upgrade step.
+  [gforcada] (#1)
+
+
 3.4.7.post0 (2022-12-16)
 ------------------------
 
