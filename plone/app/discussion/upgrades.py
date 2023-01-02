@@ -68,6 +68,7 @@ def upgrade_comment_workflows_apply_rolemapping(context):
 
 
 def upgrade_comment_workflows(context):
+    return
     upgrade_comment_workflows_retain_current_workflow(context)
     upgrade_comment_workflows_apply_rolemapping(context)
 
