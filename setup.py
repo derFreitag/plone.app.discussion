@@ -2,7 +2,7 @@ from setuptools import find_packages
 from setuptools import setup
 
 
-version = "4.0.1"
+version = "4.0.1.post1"
 
 install_requires = [
     "BTrees",
