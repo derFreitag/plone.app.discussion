@@ -87,7 +87,7 @@ def set_timezone_on_dates(context):
     creations = 0
     modifieds = 0
     logger.info("Setting timezone information on comment dates")
-    comments = pc.search({"Type": "Comment"})
+    comments = pc.search({"portal_type": "Discussion Item"})
     for cbrain in comments:
         comment = cbrain.getObject()
         if not comment.creation_date.tzinfo:
