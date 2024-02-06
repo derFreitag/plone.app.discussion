@@ -8,6 +8,23 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.2.post1 (2024-02-06)
+------------------------
+
+Breaking changes:
+
+
+- Add der Freitag specific logic about how to count public comments.
+  [gforcada]
+
+
+Bug fixes:
+
+
+- Change the index where a catalog query is made on.
+  [gforcada]
+
+
 4.0.2 (2023-07-14)
 ------------------
 
