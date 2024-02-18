@@ -70,6 +70,14 @@ def upgrade_comment_workflows_apply_rolemapping(context):
             for wf in workflows:
                 wf.updateRoleMappingsFor(comment)
             comment.reindexObjectSecurity()
+            if not comment.creation_date.tzinfo:
+                creations += 1
+                comment.creation_date = comment.creation_date.astimezone(timezone.utc)
+            if not comment.modification_date.tzinfo:
+                modifieds += 1
+                comment.modification_date = comment.modification_date.astimezone(
+                    timezone.utc
+                )
         except (AttributeError, KeyError):
             logger.info(f"Could not reindex comment {brain.getURL()}")
     pghandler.finish()
@@ -91,6 +99,7 @@ def extend_review_workflow(context):
 
 def set_timezone_on_dates(context):
     """Ensure timezone data is stored against all creation/modified dates"""
+    return
     pc = api.portal.get_tool("portal_catalog")
     creations = 0
     modifieds = 0
