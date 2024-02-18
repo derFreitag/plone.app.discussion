@@ -53,13 +53,40 @@ def upgrade_comment_workflows_retain_current_workflow(context):
 def upgrade_comment_workflows_apply_rolemapping(context):
     # Now go over the comments, update their role mappings, and reindex the
     # allowedRolesAndUsers index.
+    return
+
+def custom_freitag_upgrade(context):
+    """Get the two upgrade steps from 5.2 to 6.0 and combine them
+
+    These are the `set_timezone_on_dates` and
+    `upgrade_comment_workflows_retain_current_workflow`.
+
+    As both crawl over all comments, do it once and apply the changes of both
+    upgrades in a single loop.
+
+    As at der Freitag we have +500k comments,
+    sprinkle some `transaction.commit()`
+    otherwise when it finishes,
+    it either runs out of memory or the transaction
+    can not be pushed to the database.
+    """
+    import transaction
+
     portal_type = "Discussion Item"
     catalog = getToolByName(context, "portal_catalog")
     wf_tool = getToolByName(context, "portal_workflow")
     new_chain = list(wf_tool.getChainFor(portal_type))
     workflows = [wf_tool.getWorkflowById(wf_id) for wf_id in new_chain]
 
-    brains = catalog.unrestrictedSearchResults(portal_type=portal_type)
+    # sort the brains so the most recent comments are updated first.
+    # If the website is already live and running, those are probably the first
+    # ones to be seen. Updating a +10 years old comment is probably something
+    # no one would care for the ~4 hours this reindexing is happening
+    brains = catalog.unrestrictedSearchResults(
+        portal_type=portal_type,
+        sort_on='effective',
+        sort_order='reverse',
+    )
     num_objects = len(brains)
     pghandler = ZLogHandler(1000)
     pghandler.init("Apply rolemap changes on comments", num_objects)
@@ -70,8 +97,19 @@ def upgrade_comment_workflows_apply_rolemapping(context):
             for wf in workflows:
                 wf.updateRoleMappingsFor(comment)
             comment.reindexObjectSecurity()
+            if not comment.creation_date.tzinfo:
+                creations += 1
+                comment.creation_date = comment.creation_date.astimezone(timezone.utc)
+            if not comment.modification_date.tzinfo:
+                modifieds += 1
+                comment.modification_date = comment.modification_date.astimezone(
+                    timezone.utc
+                )
         except (AttributeError, KeyError):
             logger.info(f"Could not reindex comment {brain.getURL()}")
+        if index % 10000:
+            transaction.commit()
+            logger.info('Committing after %i comments indexed', index)
     pghandler.finish()
 
 
@@ -91,6 +129,7 @@ def extend_review_workflow(context):
 
 def set_timezone_on_dates(context):
     """Ensure timezone data is stored against all creation/modified dates"""
+    return
     pc = api.portal.get_tool("portal_catalog")
     creations = 0
     modifieds = 0
