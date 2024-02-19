@@ -1,0 +1,3 @@
+Skip 2 upgrade steps, combine them in a single one
+and add some `transaction.commit` on it to avoid failures.
+[gforcada]
