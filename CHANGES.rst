@@ -8,6 +8,17 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.2.post5 (2024-02-19)
+------------------------
+
+Breaking changes:
+
+
+- Skip 2 upgrade steps, combine them in a single one
+  and add some `transaction.commit` on it to avoid failures.
+  [gforcada]
+
+
 4.0.2.post3 (2024-02-18)
 ------------------------
 
