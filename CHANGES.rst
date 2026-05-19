@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.0.post0 (2026-05-19)
+------------------------
+
+Breaking changes:
+
+
+- Add der Freitag specific logic about how to count public comments.
+  [gforcada]
+
+
 6.0.0 (2026-05-14)
 ------------------
 
